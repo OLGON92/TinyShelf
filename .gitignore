@@ -1,0 +1,7 @@
+appsettings.json
+obj
+bin
+notes/
+appsettings.Development.json
+appsettings.*.json
+.DS_Store//
