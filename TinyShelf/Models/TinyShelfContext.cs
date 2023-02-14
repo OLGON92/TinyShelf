@@ -1,3 +1,4 @@
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -11,3 +12,4 @@ namespace TinyShelf.Models
     public TinyShelfContext(DbContextOptions options) : base(options) { }
   }
 }
+

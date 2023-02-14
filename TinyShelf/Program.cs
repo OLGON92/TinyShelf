@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Identity;
 using TinyShelf.Models;
 using Microsoft.AspNetCore.Builder;
@@ -26,12 +27,15 @@ namespace TinyShelf
 
       WebApplication app = builder.Build();
 
+
       app.UseHttpsRedirection();
       app.UseStaticFiles();
 
       app.UseRouting();
 
+
       app.UseAuthentication(); 
+
       app.UseAuthorization();
 
       app.MapControllerRoute(
@@ -43,4 +47,4 @@ namespace TinyShelf
     }
   }
 }
-       
+

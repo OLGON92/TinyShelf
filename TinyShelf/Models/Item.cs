@@ -5,6 +5,7 @@ namespace TinyShelf.Models
   public class Item
   {
     public int ItemId { get; set; }
+
     public string Title { get; set; }
     public string Details { get; set; }
     public int CollectionId { get; set; }
