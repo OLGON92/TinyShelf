@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvs;
+using Microsoft.AspNetCore.Mvc;
 using TinyShelf.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using System.Securtiy.Claims;
+using System.Security.Claims;
 
 namespace TinyShelf.Controllers
 {
@@ -55,13 +55,13 @@ namespace TinyShelf.Controllers
     {
       Item thisItem = _db.Items
           .Include(item => item.Collection)
-          .FirstOfDefault(item => item.ItemId == id);
+          .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
 
     public ActionResult Edit(int id)
     {
-      Item thisItem = _db.Items.FirstOfDefault(item => item.ItemId == id);
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Title");
       return View(thisItem);
     }
@@ -77,7 +77,7 @@ namespace TinyShelf.Controllers
 
     public ActionResult Delete(int id)
     {
-      Item thisItem = _db.Items.FirstOfDefault(item = > item.ItemId == id);
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
 
@@ -85,10 +85,10 @@ namespace TinyShelf.Controllers
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      Item thisItem = _db.Items.FirstOfDefault(item => item.ItemId == id);
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       _db.Items.Remove(thisItem);
       _db.SaveChanges();
-      return RedirectToAction("Index")
+      return RedirectToAction("Index");
     }
   }
 }

@@ -1,26 +1,27 @@
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using TinyShelf.Models;
 using Microsoft.AspNetCore.Builder;
 
-namespace TinyShelf 
+namespace TinyShelf
 {
-    class Program
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+      WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllersWithViews();
+      builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<TinyShelfContext>(
-                        dbContextOptions => dbContextOptions
-                          .UseMySql(
-                            builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
-                          )
-                        )
-                      );
-      
+      builder.Services.AddDbContext<TinyShelfContext>(
+                  dbContextOptions => dbContextOptions
+                    .UseMySql(
+                      builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
+                    )
+                  )
+                );
+
       builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<TinyShelfContext>()
                 .AddDefaultTokenProviders();
@@ -34,7 +35,7 @@ namespace TinyShelf
       app.UseRouting();
 
 
-      app.UseAuthentication(); 
+      app.UseAuthentication();
 
       app.UseAuthorization();
 

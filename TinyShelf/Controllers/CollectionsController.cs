@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 using TinyShelf.Models;
 
@@ -52,9 +53,9 @@ namespace TinyShelf.Controllers
     [HttpPost]
     public ActionResult Edit(Collection collection)
     {
-        _db.Collections.Update(collection);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
+      _db.Collections.Update(collection);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
 
     public ActionResult Delete(int id)
@@ -66,10 +67,10 @@ namespace TinyShelf.Controllers
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-        Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
-        _db.Collections.Remove(thisCollection);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
+      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
+      _db.Collections.Remove(thisCollection);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
   }
 }
