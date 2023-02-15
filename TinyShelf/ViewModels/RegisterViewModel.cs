@@ -10,6 +10,11 @@ namespace TinyShelf.ViewModels
     public string Email { get; set; }
 
     [Required]
+    [DataType(DataType.Text)]
+    [Display(Name = "User Name")]
+    public string UserName { get; set; }
+
+    [Required]
     [DataType(DataType.Password)]
     [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$", ErrorMessage = "Your password must contain at least six characters, a capital letter, a lowercase letter, and a special character.")]
     public string Password { get; set; }

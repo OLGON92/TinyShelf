@@ -9,20 +9,11 @@ a.navbar-brand {
   
 }
 
-a {
-  color: #F29559; 
-}
-
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
-.wtf  {
-  color: #F29559 !important;
-}
-
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #F29559;

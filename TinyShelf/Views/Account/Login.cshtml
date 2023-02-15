@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using TinyShelf.ViewModels;
+@model LoginViewModel
+<br>
+@if(!ViewData.ModelState.IsValid)
+{
+  @Html.ValidationSummary("Please fix the following error(s) and resubmit the form:")
+  <br>
+}
+else
+{
+  @using (Html.BeginForm())
+  {
+    @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @required = "required" })
+    <br>
+    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "required" })
+    <br>
+    <input type="submit" class="btn btn-outline-secondary" value="Log in" />
+  }
+<br>
+<br>
+}

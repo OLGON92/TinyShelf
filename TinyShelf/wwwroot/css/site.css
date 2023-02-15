@@ -19,9 +19,8 @@ html {
   position: relative;
   min-height: 100%;
   margin: 0px;
-
-  
 }
+
 
 body {
   margin-bottom: 60px;
@@ -34,7 +33,7 @@ body {
   display: flex;
   flex-direction: row;
   height: 100%;
-  min-height: 100%;  
+  min-height: 100%;
   border: #556e83;
   border-width: 0px;
   border-style: solid;
@@ -42,14 +41,13 @@ body {
   padding: 0px;
   gap: 10px;
   margin: 0px;
-  
 }
 
 .column1 {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  min-height: 100%;  
+  min-height: 100%;
   order: 0;
   width: 40%;
   border: #344a5b;
@@ -59,7 +57,6 @@ body {
   padding: 10px;
   gap: 3px;
   background-color: #202c39;
-
 }
 
 .column1-header {
@@ -104,7 +101,6 @@ body {
   border-radius: 4px;
   padding: 10px;
   background-color: #283845;
-
 }
 
 .column1-items {
@@ -123,6 +119,7 @@ body {
 .column1:hover .column1-collections,
 .column1:hover .column1-items {
   display: block;
+  /* transition: all 56.65s; */
 }
 
 .column2 {
@@ -146,7 +143,7 @@ body {
   width: 100%;
   height: auto;
   border: #344a5b;
-  border-width: 1px;
+  border-width: 0px;
   border-style: solid;
   border-radius: 4px;
   padding: 10px;
@@ -163,10 +160,9 @@ body {
   border-style: solid;
   border-radius: 4px;
   padding: 10px;
-  padding-left: 40px;
+  padding-left: 20px;
   margin-top: 20px;
 }
-
 
 .main-1 {
   background-color: #202c39;
@@ -206,7 +202,7 @@ body {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.column2-main h2{
+.column2-main h2 {
   color: #d7d7d7;
   margin-bottom: 20px;
 }
@@ -244,8 +240,53 @@ body {
   text-align: left;
 }
 
-.main-2-1 h2{
+.main-2-1 h2 {
   color: #d7d7d7;
   margin-bottom: 20px;
   font-size: 23px;
+}
+
+.login-button {
+  background-color: #283845; /* Green */
+  border: solid;
+  border-width: 1px;
+  color: #67f297;
+  padding: 9px 19px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  border-color: #67f297;
+  margin-left: 2px;
+  margin-right: 2px;
+  position: relative;
+  
+}
+
+
+.login-button:hover {
+  background-color: #283845;
+  color: #ffffff;
+  border: solid;
+  border-width: 1px;
+  padding: 9px 19px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 5px;
+  border-color: #ffffff;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+
+a {
+  color: #ffb310;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #67f297;
+  text-decoration: none;
 }
