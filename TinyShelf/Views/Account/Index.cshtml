@@ -7,7 +7,8 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-  <p>Welcome @User.Identity.Name!</p>
+  <h2 class="header">Your Profile</h2>
+  <p>Username: @User.Identity.Name</p>
   @using (Html.BeginForm("LogOff", "Account"))
   {
     <input type="submit" class="login-button" value="Log Out"/>
@@ -15,13 +16,11 @@
 }
 else
 {
-  <h2>Please login or register for a free account</h2>
+  <p>Please login or register for a free account:</p>
   <br>
   <div>
     @Html.ActionLink("Log-in","Login","Account", null, new { @class= "login-button"} )
-    <br>
     @Html.ActionLink("Register here", "Register", "Account", null, new { @class= "login-button"} )
   </div>
 }
-<br>
-<br>
+</div>

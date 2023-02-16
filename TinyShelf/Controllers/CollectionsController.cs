@@ -45,7 +45,7 @@ namespace TinyShelf.Controllers
     public ActionResult Details(int id)
     {
       Collection thisCollection = _db.Collections
-                                      .Include(collection => collection.Items)
+                                      .Include(collection => collection.Item)
                                       .FirstOrDefault(collection => collection.CollectionId == id);
       return View(thisCollection);
     }

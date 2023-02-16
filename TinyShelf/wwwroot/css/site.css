@@ -21,7 +21,6 @@ html {
   margin: 0px;
 }
 
-
 body {
   margin-bottom: 60px;
   background-color: #283845;
@@ -49,7 +48,7 @@ body {
   height: 100vh;
   min-height: 100%;
   order: 0;
-  width: 40%;
+  width: 400px;
   border: #344a5b;
   border-width: 0px;
   border-style: solid;
@@ -57,6 +56,7 @@ body {
   padding: 10px;
   gap: 3px;
   background-color: #202c39;
+  padding-top: 0px;
 }
 
 .column1-header {
@@ -67,20 +67,26 @@ body {
   border-width: 0px;
   border-style: solid;
   border-radius: 4px;
-  padding: 15px;
+  padding: 0px;
   margin-bottom: 10px;
+  margin-top: 5px;
   background-color: #202c39;
   text-align: center;
   color: #ffffff;
   font-size: 28px;
 }
 
+.logo {
+  width: 250px;
+  height: 100%;
+}
+
 .column1-newcollection {
   order: 1;
   width: 80%;
   height: auto;
-  border: #ffb310;
-  border-width: 2px;
+  border: #f29559;
+  border-width: 1px;
   border-style: solid;
   border-radius: 4px;
   padding: 10px;
@@ -88,7 +94,7 @@ body {
   margin-bottom: 10px;
   align-self: center;
   text-align: center;
-  color: #ffb310;
+  color: #f29559;
 }
 
 .column1-collections {
@@ -138,8 +144,8 @@ body {
 }
 
 .column2-nav {
-  width: 100%;
-  order: 0;
+  display: flex;
+  direction: row;
   width: 100%;
   height: auto;
   border: #344a5b;
@@ -148,6 +154,10 @@ body {
   border-radius: 4px;
   padding: 10px;
   text-align: right;
+  justify-content: right;
+  align-content: center;
+  gap: 5px;
+  align-items: center;
 }
 
 .column2-main {
@@ -160,7 +170,7 @@ body {
   border-style: solid;
   border-radius: 4px;
   padding: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
   margin-top: 20px;
 }
 
@@ -190,9 +200,9 @@ body {
 }
 
 .main-1-button:hover {
-  background-color: #bc9b30; /* Green */
+  background-color: #f29559; /* Green */
   border: none;
-  color: rgb(250, 250, 250);
+  color: rgb(11, 10, 10);
   padding: 12px 22px;
   text-align: center;
   text-decoration: none;
@@ -261,13 +271,11 @@ body {
   margin-left: 2px;
   margin-right: 2px;
   position: relative;
-  
 }
 
-
 .login-button:hover {
-  background-color: #283845;
-  color: #ffffff;
+  background-color: #f29559;
+  color: #151515;
   border: solid;
   border-width: 1px;
   padding: 9px 19px;
@@ -275,11 +283,10 @@ body {
   text-decoration: none;
   font-size: 14px;
   border-radius: 5px;
-  border-color: #ffffff;
+  border-color: #f29559;
   margin-left: 2px;
   margin-right: 2px;
 }
-
 
 a {
   color: #ffb310;
@@ -289,4 +296,79 @@ a {
 a:hover {
   color: #67f297;
   text-decoration: none;
+}
+
+.img-link {
+  width: 30px;
+  height: 30px;
+  content: url("~/img/user.png") no-repeat;
+  background-size: cover;
+}
+
+.fadein img {
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.fadein img:hover {
+  opacity: 0.5;
+  transition: 0.3s ease;
+}
+
+.fadein {
+  height: 45px;
+  padding: 10px;
+  margin-bottom: 0;
+}
+
+.fadein-2 img {
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.fadein-2 img:hover {
+  opacity: 0.2;
+  transition: 0.3s ease;
+}
+
+.fadein-2 {
+  order: 3;
+}
+
+.header {
+
+    color: #d7d7d7;
+    margin-bottom: 20px;
+    font-size: 23px;
+
+}
+
+.allforms {
+  background-color: #283845 !IMPORTANT;
+  width: 280px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 16px;
+  border-width: 1px;
+  border: solid #b8b08d;
+  color: #d7d7d7;
+  outline: none !important;
+}
+
+.allforms:focus {
+  background-color: #283845 !IMPORTANT;
+  width: 280px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 16px;
+  border-width: 1px;
+  border: solid #67f297;
+  color: #d7d7d7;
+  outline: none !important;
 }

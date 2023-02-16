@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Create Collection";
+}
+
+@model TinyShelf.Models.Collection
+
+@using (Html.BeginForm())
+{
+  @Html.Label("Name")
+  @Html.TextBoxFor(model => model.Name)
+  <input type="submit" value="Add a new Collection" class="btn btn-default">
+}

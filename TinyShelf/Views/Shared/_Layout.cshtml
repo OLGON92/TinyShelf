@@ -14,23 +14,30 @@
     <div>
         <div class="box">
             <div class="column1">
-                <div class="column1-header">TinyShelf</div>
+                <div class="column1-header">
+                    <a href="/Home/Index" class="img-link"><img src="~/img/logo.png" class="logo"></a>
+                </div>
+
+                <div class="fadein">
+                    <a href="/Account/Index" class="img-link"><img src="~/img/user.png" class="img-link"></a>
+                </div>
+
                 <hr />
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div class="column1-newcollection">New Collection</div>
-                    <div class="column1-collections">Collection</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-collections">Collection</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-collections">Collection</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-items">items</div>
-                    <div class="column1-items">items</div>
+                    <button id="myButton" class="column1-newcollection">New Collection</button>                   
+                        <div class="column1-collections">Collection</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-collections">Collection</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-collections">Collection</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-items">items</div>
+                        <div class="column1-items">items</div>
                 }
                 else
                 {
@@ -40,6 +47,7 @@
 
                 <div class="column2">
                     <div class="column2-nav">
+                        <div>
                         @if (User.Identity.IsAuthenticated)
                         {
                             @using (Html.BeginForm("LogOff", "Account"))
@@ -52,8 +60,15 @@
                         {
                             @Html.ActionLink("Home","Index","Home", null, new { @class= "login-button"} )
                             @Html.ActionLink("Log In","Login","Account", null, new { @class= "login-button"} )
+
                         }
+                        </div>
+                        
+                        <div class="fadein-2">
+                            <a href="/Account/Index"><img src="~/img/user.png" class="img-link"></a>
+                        </div> 
                     </div>
+
                     <div class="column2-main"> 
                         @RenderBody()
                     </div> 

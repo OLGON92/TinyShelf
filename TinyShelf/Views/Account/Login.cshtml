@@ -14,13 +14,15 @@ else
 {
   @using (Html.BeginForm())
   {
-    @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
-    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @required = "required" })
+    @Html.LabelFor(m => m.UserName, new { @class = "control-label" })<br>
+    @Html.TextBoxFor(m => m.UserName, new { @class = "allforms", @required = "required" })
     <br>
     @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "required" })
     <br>
-    <input type="submit" class="btn btn-outline-secondary" value="Log in" />
+    @Html.PasswordFor(m => m.Password, new { @class = "allforms", @required = "required" })
+    <br>
+    <input type="submit" class="login-button" value="Log in" /><br><br>
+    <p>Need an account? </p>@Html.ActionLink("Register here", "Register", "Account", null, new { @class= "login-button"} )
   }
 <br>
 <br>

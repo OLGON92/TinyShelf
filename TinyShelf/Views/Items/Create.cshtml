@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Create Item";
+}
+
+@model TinyShelf.Models.Item
+
+@using (Html.BeginForm())
+{
+  @Html.Label("Title")
+  @Html.TextBoxFor(model => model.Title)
+
+  @Html.Label("Details")
+  @Html.TextBoxFor(model => model.Details)
+  <input type="submit" value="Add a new Item" class="btn btn-default">
+}

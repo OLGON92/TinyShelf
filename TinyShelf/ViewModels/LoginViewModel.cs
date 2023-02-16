@@ -10,7 +10,7 @@ namespace TinyShelf.ViewModels
 
     [Required]
     [DataType(DataType.Text)]
-    [Display(Name = "User Name")]
+    [Display(Name = "Username")]
     public string UserName { get; set; }
   }
 }

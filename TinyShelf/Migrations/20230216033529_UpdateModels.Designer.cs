@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TinyShelf.Models;
 
@@ -10,9 +11,10 @@ using TinyShelf.Models;
 namespace TinyShelf.Migrations
 {
     [DbContext(typeof(TinyShelfContext))]
-    partial class TinyShelfContextModelSnapshot : ModelSnapshot
+    [Migration("20230216033529_UpdateModels")]
+    partial class UpdateModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -6,8 +6,7 @@ namespace TinyShelf.Models
   {
     public int CollectionId { get; set; }
     public string Name { get; set; }
-    public List<Item> Items { get; set; }
-    public string UserId { get; set; }
+    public List<Item> Item { get; }
     public ApplicationUser User { get; set; }
 
   }

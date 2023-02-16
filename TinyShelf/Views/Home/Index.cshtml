@@ -2,17 +2,28 @@
     ViewData["Title"] = "Home Page";
 }
 
+@using TinyShelf.ViewModels;
+@model LoginViewModel;
 
-                <div class="column2-main"><h2>Build your bookshelf, <br>share your story.</h2><p>Add details, ratings, and notes to your favorite books, movies, and more. Keep your collections private or share them with friends, family, or students using the social sharing feature.</p>
-                 <span class="text"> @Html.ActionLink("Sign Up for Free", "Index", "Account", null, new { @class= "main-1-button"} )</span>  
-                
-                <div class="main-2">
-                        <div class="main-2-1"><h2>Catalog & Treasure</h2>Keep, share, and inspire with Collections. Connect and exchange recommendations with others, all in one place.</div>
-                        <div class="main-2-1"><h2>Share Your Passions</h2>Connect through your favorites: Bring people together by sharing your go-to spots and resources.</div>
-                </div>
-                
-                </div> 
-            </div>
-
+<div class="column2-main">
+    <h2>Build your bookshelf, <br>share your story.</h2>
+    <p>Add details, ratings, and notes to your favorite books, movies, and more. Keep your collections private or share them with friends, family, or students using the social sharing feature.</p>
+    @if(!ViewData.ModelState.IsValid)
+    {
+        <span class="text"> @Html.ActionLink("Sign Up for Free", "Index", "Account", null, new { @class= "main-1-button"} )</span> 
+    }
+    else
+    {
+        <span class="text">Welcome in!</span> 
+    }
+    <div class="main-2">
+        <div class="main-2-1">
+            <h2>Catalog & Treasure</h2>
+            Keep, share, and inspire with Collections. Connect and exchange recommendations with others, all in one place.
+        </div>
+        <div class="main-2-1">
+            <h2>Share Your Passions</h2>
+            Connect through your favorites: Bring people together by sharing your go-to spots and resources.
+        </div>
     </div>
-</div>
+</div> 

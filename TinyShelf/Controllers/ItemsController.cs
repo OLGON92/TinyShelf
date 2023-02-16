@@ -33,19 +33,20 @@ namespace TinyShelf.Controllers
     //   return View(userItems);
     // }
 
+    public ActionResult Index()
+    {
+      List<Item> model = _db.Items.ToList();
+      return View(model);
+    }
+
     public ActionResult Create()
     {
-      ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Title");
       return View();
     }
 
-    [Authorize]
     [HttpPost]
-    public async Task<ActionResult> Create(Item item, int CollectionId)
+    public ActionResult Create(Item item)
     {
-      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-      item.User = currentUser;
       _db.Items.Add(item);
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -54,7 +55,6 @@ namespace TinyShelf.Controllers
     public ActionResult Details(int id)
     {
       Item thisItem = _db.Items
-          .Include(item => item.Collection)
           .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
