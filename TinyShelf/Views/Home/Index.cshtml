@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "TinyShelf";
 }
 
 @using TinyShelf.ViewModels;
@@ -8,7 +8,7 @@
 <div class="column2-main">
     <h2>Build your bookshelf, <br>share your story.</h2>
     <p>Add details, ratings, and notes to your favorite books, movies, and more. Keep your collections private or share them with friends, family, or students using the social sharing feature.</p>
-    @if(!ViewData.ModelState.IsValid)
+    @if(!User.Identity.IsAuthenticated)
     {
         <span class="text"> @Html.ActionLink("Sign Up for Free", "Index", "Account", null, new { @class= "main-1-button"} )</span> 
     }

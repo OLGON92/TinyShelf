@@ -217,6 +217,9 @@ namespace TinyShelf.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
@@ -230,31 +233,13 @@ namespace TinyShelf.Migrations
                     b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("TinyShelf.Models.CollectionItem", b =>
-                {
-                    b.Property<int>("CollectionItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CollectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CollectionItemId");
-
-                    b.HasIndex("CollectionId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("CollectionItem");
-                });
-
             modelBuilder.Entity("TinyShelf.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CollectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Details")
@@ -267,6 +252,8 @@ namespace TinyShelf.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("CollectionId");
 
                     b.HasIndex("UserId");
 
@@ -333,30 +320,19 @@ namespace TinyShelf.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TinyShelf.Models.CollectionItem", b =>
+            modelBuilder.Entity("TinyShelf.Models.Item", b =>
                 {
                     b.HasOne("TinyShelf.Models.Collection", "Collection")
-                        .WithMany("JoinEntities")
+                        .WithMany("Items")
                         .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TinyShelf.Models.Item", "Item")
-                        .WithMany("JoinEntities")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Collection");
-
-                    b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("TinyShelf.Models.Item", b =>
-                {
                     b.HasOne("TinyShelf.Models.ApplicationUser", "User")
                         .WithMany("Items")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Collection");
 
                     b.Navigation("User");
                 });
@@ -370,12 +346,7 @@ namespace TinyShelf.Migrations
 
             modelBuilder.Entity("TinyShelf.Models.Collection", b =>
                 {
-                    b.Navigation("JoinEntities");
-                });
-
-            modelBuilder.Entity("TinyShelf.Models.Item", b =>
-                {
-                    b.Navigation("JoinEntities");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

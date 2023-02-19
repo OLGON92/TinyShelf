@@ -23,9 +23,12 @@ namespace TinyShelf.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      List<Collection> model = _db.Collections.ToList();
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      List<Collection> model = _db.Collections
+                      .Where(collection => collection.User.Id == currentUser.Id)
+                      .ToList();
       return View(model);
     }
 
@@ -34,25 +37,43 @@ namespace TinyShelf.Controllers
       return View();
     }
 
+    [Authorize]
     [HttpPost]
-    public ActionResult Create(Collection collection)
+    public async Task<ActionResult> Create(Collection collection)
     {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      collection.User = currentUser;
       _db.Collections.Add(collection);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
-    public ActionResult Details(int id)
+    public async Task<ActionResult> Details(int id)
     {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
       Collection thisCollection = _db.Collections
-                                      .Include(collection => collection.Item)
+                                      .Include(collection => collection.Items)
                                       .FirstOrDefault(collection => collection.CollectionId == id);
       return View(thisCollection);
     }
 
-    [HttpPost]
-    public ActionResult Edit(Collection collection)
+    public async Task<ActionResult> Edit(int id)
     {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
+      return View(thisCollection);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> Edit(Collection collection)
+    {
+      Collection thisCollection = await _db.Collections.FirstOrDefaultAsync(collection => collection.CollectionId == collection.CollectionId);
+      var user = await _userManager.GetUserAsync(User);
+      if (thisCollection == null || thisCollection.User != user)
+      {
+        return Unauthorized();
+      }
       _db.Collections.Update(collection);
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -64,13 +85,50 @@ namespace TinyShelf.Controllers
       return View(thisCollection);
     }
 
+    [Authorize]
     [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
+    public async Task<ActionResult> DeleteConfirmed(int id)
     {
-      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
+      Collection thisCollection = await _db.Collections.FirstOrDefaultAsync(collection => collection.CollectionId == collection.CollectionId);
+      var user = await _userManager.GetUserAsync(User);
+      if (thisCollection == null || thisCollection.User != user)
+      {
+        return Unauthorized();
+      }
       _db.Collections.Remove(thisCollection);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    // Adding an AddItem to be able to collect the list for a dropdown collections
+
+    public async Task<ActionResult> AddItem(int id)
+    {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id && collection.User.Id == currentUser.Id);
+      if (thisCollection == null)
+      {
+        return NotFound();
+      }
+      ViewBag.ItemId = new SelectList(_db.Items, "Item", "Name");
+      return View(thisCollection);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> AddItem(Collection collection, int ItemId)
+    {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      Collection thisCollection = _db.Collections.FirstOrDefault(c => c.CollectionId == collection.CollectionId && c.User.Id == currentUser.Id);
+      if (thisCollection == null)
+      {
+        return NotFound();
+      }
+      Item selectedItem = _db.Items.FirstOrDefault(item => item.ItemId == ItemId);
+      collection.Items.Add(selectedItem);
+      _db.Collections.Update(collection);
+      _db.SaveChanges();
+      return RedirectToAction("Details", new { id = collection.CollectionId });
+    }
+
   }
 }

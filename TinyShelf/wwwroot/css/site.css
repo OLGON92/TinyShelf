@@ -54,7 +54,7 @@ body {
   border-style: solid;
   border-radius: 4px;
   padding: 10px;
-  gap: 3px;
+  gap: 2px;
   background-color: #202c39;
   padding-top: 0px;
 }
@@ -83,18 +83,14 @@ body {
 
 .column1-newcollection {
   order: 1;
-  width: 80%;
+  width: 100%;
   height: auto;
-  border: #f29559;
-  border-width: 1px;
+  border: #283845;
+  border-width: 0px;
   border-style: solid;
   border-radius: 4px;
   padding: 10px;
-  background-color: #202c39;
-  margin-bottom: 10px;
-  align-self: center;
-  text-align: center;
-  color: #f29559;
+  margin-bottom: 16px;
 }
 
 .column1-collections {
@@ -110,7 +106,7 @@ body {
 }
 
 .column1-items {
-  order: 3;
+  order: 4;
   width: 100%;
   height: auto;
   border: #283845;
@@ -288,6 +284,14 @@ body {
   margin-right: 2px;
 }
 
+.login-button a {
+  color: #67f297;
+}
+
+.login-button a:hover {
+  color: #151515;
+}
+
 a {
   color: #ffb310;
   text-decoration: none;
@@ -371,4 +375,62 @@ a:hover {
   border: solid #67f297;
   color: #d7d7d7;
   outline: none !important;
+}
+
+
+.button-anon-pen {
+  width: 200px;
+  background-image: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b);
+  text-align: center;
+  margin: 0 auto;
+  color: #d7d7d7;
+  display: block;
+  top: 45vh;
+  font-weight: bold 10pt;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.button-anon-pen:hover {
+  -webkit-animation: play 1.6s ease-in infinite;
+}
+
+.button-anon-pen div {
+  padding: 10px 0;
+  font-size: 22px;
+  display: block;
+  margin: 3px;
+  background: #202c39;
+  border-radius: 3px;
+   font-size: 15px;
+}
+
+@-webkit-keyframes play {
+  0% {
+      background-position: 0px;
+  }
+  20% {
+      background-position: -110px;
+  }
+  35% {
+      background-position: -180px;
+  }
+  50% {
+      background-position: -210px;
+  }
+  80% {
+      background-position: -350px;
+  }
+  100% {
+      background-position: -390px;
+  }
+}
+
+.newcollection-font a {
+  font-size: 10pt;
+}
+
+.button-anon-pen a {
+  font-size: 10pt;
 }

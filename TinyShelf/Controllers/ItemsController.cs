@@ -22,28 +22,21 @@ namespace TinyShelf.Controllers
       _db = db;
     }
 
-    // public async Task<ActionResult> Index()
-    // {
-    //   string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    //   ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-    //   List<Item> userItems = _db.Items
-    //                             .Where(entry => entry.User.Id == curentUser.id)
-    //                             .Include(item => item.Collection)
-    //                             .ToList();
-    //   return View(userItems);
-    // }
-
     public ActionResult Index()
     {
-      List<Item> model = _db.Items.ToList();
+      List<Item> model = _db.Items
+                            .Include(item => item.Collection)
+                            .ToList();
       return View(model);
     }
 
     public ActionResult Create()
     {
+      ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Name");
       return View();
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult Create(Item item)
     {
@@ -55,21 +48,28 @@ namespace TinyShelf.Controllers
     public ActionResult Details(int id)
     {
       Item thisItem = _db.Items
-          .FirstOrDefault(item => item.ItemId == id);
+                          .Include(item => item.Collection)
+                          .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
 
     public ActionResult Edit(int id)
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-      ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Title");
+      ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Name");
       return View(thisItem);
     }
 
     [Authorize]
     [HttpPost]
-    public ActionResult Edit(Item item)
+    public async Task<ActionResult> Edit(Item item)
     {
+      Item thisItem = await _db.Items.FirstOrDefaultAsync(item => item.ItemId == item.ItemId);
+      var user = await _userManager.GetUserAsync(User);
+      if (thisItem == null || thisItem.User != user)
+      {
+        return Unauthorized();
+      }
       _db.Items.Update(item);
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -83,9 +83,14 @@ namespace TinyShelf.Controllers
 
     [Authorize]
     [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
+    public async Task<ActionResult> DeleteConfirmed(int id)
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      var user = await _userManager.GetUserAsync(User);
+      if (thisItem == null || thisItem.User != user)
+      {
+        return Unauthorized();
+      }
       _db.Items.Remove(thisItem);
       _db.SaveChanges();
       return RedirectToAction("Index");
