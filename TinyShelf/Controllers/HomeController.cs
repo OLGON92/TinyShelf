@@ -10,36 +10,31 @@ namespace TinyShelf.Controllers
 
   public class HomeController : Controller
   {
-      private readonly TinyShelfContext _db;
+    private readonly TinyShelfContext _db;
 
-      private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-      public HomeController(UserManager<ApplicationUser> userManager, TinyShelfContext db)
-      {
-        _userManager = userManager;
-        _db = db;
-      }
+    public HomeController(UserManager<ApplicationUser> userManager, TinyShelfContext db)
+    {
+      _userManager = userManager;
+      _db = db;
+    }
 
-      [HttpGet("/")]
+    [HttpGet("/")]
 
-      public ActionResult Index()
-      {
-        return View();
-      }
-      /*public IActionResult Index()
-      {
-          return View();
-      }
+    public ActionResult Index()
+    {
+      // Collection[] collections = _db.Collections.ToArray();
+      // Item[] items = _db.Items.ToArray();
+      // Dictionary<string, object[]> model = new Dictionary<string, object[]>();
+      // model.Add("collections", collections);
+      // model.Add("items", items);
+      // return View(model);
+      List<Collection> model = _db.Collections
+                      .ToList();
+      return View(model);
 
-      public IActionResult Privacy()
-      {
-          return View();
-      }
+    }
 
-      [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-      public IActionResult Error()
-      {
-          return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-      }*/
   }
 }

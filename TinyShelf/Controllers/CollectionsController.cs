@@ -32,12 +32,13 @@ namespace TinyShelf.Controllers
       return View(model);
     }
 
+    [Authorize]
     public ActionResult Create()
     {
       return View();
     }
 
-    [Authorize]
+
     [HttpPost]
     public async Task<ActionResult> Create(Collection collection)
     {
@@ -52,11 +53,13 @@ namespace TinyShelf.Controllers
     {
       ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
       Collection thisCollection = _db.Collections
-                                      .Include(collection => collection.Items)
+                                      .Include(collection => collection.JoinEntities)
+                                      .ThenInclude(join => join.Item)
                                       .FirstOrDefault(collection => collection.CollectionId == id);
       return View(thisCollection);
     }
 
+    [Authorize]
     public async Task<ActionResult> Edit(int id)
     {
       ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -64,7 +67,7 @@ namespace TinyShelf.Controllers
       return View(thisCollection);
     }
 
-    [Authorize]
+
     [HttpPost]
     public async Task<ActionResult> Edit(Collection collection)
     {
@@ -79,13 +82,14 @@ namespace TinyShelf.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     public ActionResult Delete(int id)
     {
       Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
       return View(thisCollection);
     }
 
-    [Authorize]
+
     [HttpPost, ActionName("Delete")]
     public async Task<ActionResult> DeleteConfirmed(int id)
     {
@@ -101,34 +105,46 @@ namespace TinyShelf.Controllers
     }
 
     // Adding an AddItem to be able to collect the list for a dropdown collections
-
-    public async Task<ActionResult> AddItem(int id)
+    [Authorize]
+    public ActionResult AddItem(int id)
     {
-      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id && collection.User.Id == currentUser.Id);
-      if (thisCollection == null)
-      {
-        return NotFound();
-      }
-      ViewBag.ItemId = new SelectList(_db.Items, "Item", "Name");
+      // ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      // List<Collection> model = _db.Collections
+      //                 .Where(collection => collection.User.Id == currentUser.Id)
+      //                 .ToList();
+      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
+      ViewBag.ItemId = new SelectList(_db.Items, "ItemId", "Title");
       return View(thisCollection);
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddItem(Collection collection, int ItemId)
+    public async Task<ActionResult> AddItem(Collection collection, int itemId)
     {
-      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-      Collection thisCollection = _db.Collections.FirstOrDefault(c => c.CollectionId == collection.CollectionId && c.User.Id == currentUser.Id);
-      if (thisCollection == null)
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+#nullable enable
+      CollectionItem? joinEntity = _db.CollectionItems
+      .FirstOrDefault(join => (join.ItemId == itemId && join.CollectionId == collection.CollectionId));
+#nullable disable
+      if (joinEntity == null && itemId != 0)
       {
-        return NotFound();
+        _db.CollectionItems.Add(new CollectionItem() { ItemId = itemId, CollectionId = collection.CollectionId });
+        _db.SaveChanges();
       }
-      Item selectedItem = _db.Items.FirstOrDefault(item => item.ItemId == ItemId);
-      collection.Items.Add(selectedItem);
-      _db.Collections.Update(collection);
-      _db.SaveChanges();
       return RedirectToAction("Details", new { id = collection.CollectionId });
     }
 
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> DeleteJoin(int joinId)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      CollectionItem joinEntry = _db.CollectionItems
+                                    .FirstOrDefault(entry => entry.CollectionItemId == joinId);
+      _db.CollectionItems.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }

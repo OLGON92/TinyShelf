@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+@model TinyShelf.Models.Item
+
+<h4>Edit this item: @Html.DisplayFor(model => model.Title)</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.ItemId)
+
+  @Html.Label("Title")
+  @Html.EditorFor(model => model.Title)
+
+  @Html.Label("Details")
+  @Html.EditorFor(model => model.Details)
+  <input type="submit" value="Add a new Item" class="btn btn-default">
+}
+
+<p>@Html.ActionLink("Back to items", "Index")</p>

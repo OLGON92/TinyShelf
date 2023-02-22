@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Add Collection";
+}
+
+@model TinyShelf.Models.Item
+
+<h2>Add a collection</h2>
+
+<h4>Add a collection to this item: @Html.DisplayFor(model => model.Title)</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.ItemId)
+
+  @Html.Label("Select a collection")
+  @Html.DropDownList("CollectionId")
+
+  <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to treat list", "Index")</p>

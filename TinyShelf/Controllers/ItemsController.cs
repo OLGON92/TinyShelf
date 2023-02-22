@@ -22,24 +22,23 @@ namespace TinyShelf.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      List<Item> model = _db.Items
-                            .Include(item => item.Collection)
-                            .ToList();
-      return View(model);
-    }
-
-    public ActionResult Create()
-    {
-      ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Name");
-      return View();
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      return View(_db.Items.ToList());
     }
 
     [Authorize]
-    [HttpPost]
-    public ActionResult Create(Item item)
+    public ActionResult Create()
     {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(Item item)
+    {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      item.User = currentUser;
       _db.Items.Add(item);
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -48,11 +47,13 @@ namespace TinyShelf.Controllers
     public ActionResult Details(int id)
     {
       Item thisItem = _db.Items
-                          .Include(item => item.Collection)
+                          .Include(item => item.JoinEntities)
+                          .ThenInclude(join => join.Collection)
                           .FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
 
+    [Authorize]
     public ActionResult Edit(int id)
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
@@ -60,38 +61,76 @@ namespace TinyShelf.Controllers
       return View(thisItem);
     }
 
-    [Authorize]
+
     [HttpPost]
     public async Task<ActionResult> Edit(Item item)
     {
-      Item thisItem = await _db.Items.FirstOrDefaultAsync(item => item.ItemId == item.ItemId);
-      var user = await _userManager.GetUserAsync(User);
-      if (thisItem == null || thisItem.User != user)
+      if (!ModelState.IsValid)
       {
-        return Unauthorized();
+        ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Name");
+        return View(item);
       }
-      _db.Items.Update(item);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      else
+      {
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        item.User = currentUser;
+        _db.Items.Update(item);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
+    [Authorize]
     public ActionResult Delete(int id)
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }
 
-    [Authorize]
     [HttpPost, ActionName("Delete")]
     public async Task<ActionResult> DeleteConfirmed(int id)
     {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-      var user = await _userManager.GetUserAsync(User);
-      if (thisItem == null || thisItem.User != user)
-      {
-        return Unauthorized();
-      }
       _db.Items.Remove(thisItem);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [Authorize]
+    public async Task<ActionResult> AddCollection(int id)
+    {
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      Item thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+      ViewBag.CollectionId = new SelectList(_db.Collections, "CollectionId", "Name");
+      return View(thisItem);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> AddCollection(Item item, int collectionId)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+#nullable enable
+      CollectionItem? joinEntity = _db.CollectionItems.FirstOrDefault(join => (join.CollectionId == collectionId && join.ItemId == item.ItemId));
+#nullable disable
+      if (joinEntity == null && collectionId != 0)
+      {
+        _db.CollectionItems.Add(new CollectionItem() { CollectionId = collectionId, ItemId = item.ItemId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = item.ItemId });
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> DeleteJoin(int joinId)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      CollectionItem joinEntry = _db.CollectionItems.FirstOrDefault(entry => entry.CollectionItemId == joinId);
+      _db.CollectionItems.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

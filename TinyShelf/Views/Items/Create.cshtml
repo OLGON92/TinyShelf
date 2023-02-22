@@ -6,10 +6,10 @@
 
 @using (Html.BeginForm())
 {
-  @Html.Label("Title")
-  @Html.TextBoxFor(model => model.Title)
+  @Html.Label("Title: ")<br>
+  @Html.TextBoxFor(model => model.Title, new { @class = "allforms", @required = "required" })<br>
 
-  @Html.Label("Details")
-  @Html.TextBoxFor(model => model.Details)
-  <input type="submit" value="Add a new Item" class="btn btn-default">
+  @Html.Label("Details:")<br>
+  @Html.TextBoxFor(model => model.Details, new { @class = "allforms", @required = "required" })<br><br>
+  <input type="submit" value="Add a new Item" class="main-1-button">
 }

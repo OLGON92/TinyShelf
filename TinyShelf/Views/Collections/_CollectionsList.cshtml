@@ -1,0 +1,24 @@
+
+@using TinyShelf.Models;
+
+@if (@Model.Count == 0) {
+  <ul>
+    <li>HI!</li>
+  </ul>
+  
+}
+else
+{
+  <ul>
+    @foreach (Collection collection in Model)
+    {
+      <li>@collection.Name</li>
+    }
+  </ul>
+  @* <ul>
+    @foreach (Item item in Model)
+    {
+      <li>@item.Title</li>
+    }
+  </ul> *@
+}

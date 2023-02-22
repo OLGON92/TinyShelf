@@ -1,0 +1,39 @@
+@{
+  ViewData["Title"] = "Collections";
+}
+
+@model TinyShelf.Models.Collection
+@using TinyShelf.Models
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>Your collection is empty.</p>
+}
+else
+{
+  <h4>This collection:</h4>
+  <ul>
+    @foreach(CollectionItem join in Model.JoinEntities)
+    {
+      <li>Item Title: @join.Item.Title, Details: @join.Item.Title</li>
+      @if (User.Identity.IsAuthenticated)
+      {
+        @using (Html.BeginForm("DeleteJoin", "Collections"))
+        {
+          @Html.Hidden("joinId", @join.CollectionItemId)
+          <input type="submit" value="Delete" />
+        }
+      }
+      else
+      {
+        <p>Please @Html.ActionLink("log in", "LogIn", "Account") to delete this collection.</p>
+      }
+    }  
+  </ul>
+}
+
+<p>@Html.ActionLink("Back to collection list", "Index")</p>
+<p>@Html.ActionLink("Add an Item", "AddItem", new { id = Model.CollectionId })</p>

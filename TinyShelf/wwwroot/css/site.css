@@ -94,15 +94,15 @@ body {
 }
 
 .column1-collections {
-  order: 3;
-  width: 100%;
-  height: auto;
+  order: 0;
+  width: 50%;
+  height: 40px;
   border: #283845;
-  border-width: 0px;
+  border-width: 1px;
   border-style: solid;
   border-radius: 4px;
-  padding: 10px;
-  background-color: #283845;
+  padding: 8px;
+  background-color: #202c39;
 }
 
 .column1-items {

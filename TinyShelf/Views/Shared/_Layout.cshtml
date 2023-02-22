@@ -31,10 +31,7 @@
                         <div class="newcollection-font">New Collection
                         </div>
                         </a> 
-                     </div>
-        
-                        <div class="column1-collections">Collection</div>
-                        <div class="column1-items">items</div>
+                    </div>
 
                 }
                 else
@@ -44,11 +41,50 @@
                         <div class="newcollection-font">New Collection
                         </div>
                         </a> 
-                     </div>
+                    </div>
                 }
 
-               
-             </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="column1-newcollection">
+                        <a asp-controller="Collections" asp-action="Index" class="button-anon-pen">
+                        <div class="newcollection-font">Your Collections
+                        </div>
+                        </a> 
+                    </div>
+
+                }
+                else
+                {
+                    <div class="column1-newcollection">
+                        <a asp-controller="Account" class="button-anon-pen">
+                        <div class="newcollection-font">Your Collections
+                        </div>
+                        </a> 
+                    </div>
+                }
+
+                                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="column1-newcollection">
+                        <a asp-controller="Items" asp-action="Create" class="button-anon-pen">
+                        <div class="newcollection-font">Add Items
+                        </div>
+                        </a> 
+                    </div>
+
+                }
+                else
+                {
+                    <div class="column1-newcollection">
+                        <a asp-controller="Account" class="button-anon-pen">
+                        <div class="newcollection-font">Your Collections
+                        </div>
+                        </a> 
+                    </div>
+                }
+
+            </div>
 
             <div class="column2">
                 <div class="column2-nav">
@@ -70,7 +106,7 @@
                     </div>
                         
                     <div class="fadein-2">
-                         <a href="/Account/Index"><img src="~/img/user.png" class="img-link"></a>
+                        <a href="/Account/Index"><img src="~/img/user.png" class="img-link"></a>
                     </div> 
                 </div>
 

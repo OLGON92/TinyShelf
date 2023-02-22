@@ -1,0 +1,38 @@
+@{
+  Layout = "_Layout";
+}
+
+@model TinyShelf.Models.Item
+
+<h2>Item Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)<h3>
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>This item does not belong to any collections</p> 
+}
+else
+{
+  <h4>This item is associated with the following collections:</h4>
+  <ul>
+  @foreach(CollectionItem join in Model.JoinEntities)
+  {
+    <li>@join.Collection.Name</li>
+    @if (User.Identity.IsAuthenticated)
+    {
+      @using (Html.BeginForm("DeleteJoin", "Collections"))
+      {
+        @Html.Hidden("joinId", @join.CollectionItemId)
+        <input type="submit" value="Delete" />
+      }
+    }
+    else
+    {
+      <p>Please @Html.ActionLink("log in", "LogIn", "Account") to delete this item.</p>
+    }
+  }
+  </ul>
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

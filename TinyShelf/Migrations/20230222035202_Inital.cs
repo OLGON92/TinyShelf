@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TinyShelf.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -226,7 +226,6 @@ namespace TinyShelf.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Details = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CollectionId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -238,11 +237,32 @@ namespace TinyShelf.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "CollectionItems",
+                columns: table => new
+                {
+                    CollectionItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    CollectionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionItems", x => x.CollectionItemId);
                     table.ForeignKey(
-                        name: "FK_Items_Collections_CollectionId",
+                        name: "FK_CollectionItems_Collections_CollectionId",
                         column: x => x.CollectionId,
                         principalTable: "Collections",
                         principalColumn: "CollectionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollectionItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -285,14 +305,19 @@ namespace TinyShelf.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CollectionItems_CollectionId",
+                table: "CollectionItems",
+                column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollectionItems_ItemId",
+                table: "CollectionItems",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Collections_UserId",
                 table: "Collections",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Items_CollectionId",
-                table: "Items",
-                column: "CollectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_UserId",
@@ -318,13 +343,16 @@ namespace TinyShelf.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "CollectionItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Collections");
+
+            migrationBuilder.DropTable(
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
