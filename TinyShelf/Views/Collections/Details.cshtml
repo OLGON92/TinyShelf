@@ -14,17 +14,19 @@
 }
 else
 {
-  <h4>This collection:</h4>
   <ul>
     @foreach(CollectionItem join in Model.JoinEntities)
     {
-      <li>Item Title: @join.Item.Title, Details: @join.Item.Title</li>
+      <li>@join.Item.Title</li>
+      @join.Item.Details<br>
       @if (User.Identity.IsAuthenticated)
       {
         @using (Html.BeginForm("DeleteJoin", "Collections"))
         {
           @Html.Hidden("joinId", @join.CollectionItemId)
-          <input type="submit" value="Delete" />
+          <input type="submit" value="Delete" class="deleteItem-button" />
+          <button class="deleteItem-button" >@Html.ActionLink("Edit", "Edit", new { id = Model.CollectionId })</button>
+
         }
       }
       else

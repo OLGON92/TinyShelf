@@ -104,16 +104,18 @@ namespace TinyShelf.Controllers
       return RedirectToAction("Index");
     }
 
-    // Adding an AddItem to be able to collect the list for a dropdown collections
     [Authorize]
-    public ActionResult AddItem(int id)
+    public async Task<ActionResult> AddItem(int id)
     {
-      // ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-      // List<Collection> model = _db.Collections
-      //                 .Where(collection => collection.User.Id == currentUser.Id)
-      //                 .ToList();
-      Collection thisCollection = _db.Collections.FirstOrDefault(collection => collection.CollectionId == id);
-      ViewBag.ItemId = new SelectList(_db.Items, "ItemId", "Title");
+      ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      List<Item> model = _db.Items
+                      .Where(item => item.User.Id == currentUser.Id)
+                      .ToList();
+      Collection thisCollection = _db.Collections
+                                    .Include(collection => collection.JoinEntities)
+                                    .Where(item => item.User.Id == currentUser.Id)
+                                    .FirstOrDefault(collection => collection.CollectionId == id);
+      ViewBag.ItemId = new SelectList(model, "ItemId", "Title");
       return View(thisCollection);
     }
 

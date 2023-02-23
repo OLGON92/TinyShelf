@@ -25,7 +25,10 @@ namespace TinyShelf.Controllers
     public async Task<ActionResult> Index()
     {
       ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-      return View(_db.Items.ToList());
+      List<Item> model = _db.Items
+                      .Where(item => item.User.Id == currentUser.Id)
+                      .ToList();
+      return View(model);
     }
 
     [Authorize]

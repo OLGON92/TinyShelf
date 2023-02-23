@@ -193,6 +193,8 @@ body {
   font-size: 14px;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+
 }
 
 .main-1-button:hover {
@@ -267,6 +269,57 @@ body {
   margin-left: 2px;
   margin-right: 2px;
   position: relative;
+  letter-spacing: 1px;
+
+}
+
+.deleteItem-button {
+  background-color: #283845; /* Green */
+  border: solid;
+  border-width: 1px;
+  color: #67f297;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 9px;
+  border-color: #67f297;
+  margin: 5px;
+  margin-top: 15px;
+
+  position: relative;
+  width: 190px;
+}
+
+.deleteItem-button a {
+
+  color: #67f297;
+
+}
+
+.deleteItem-button:hover {
+  background-color: #f29559; /* Green */
+  border: solid;
+  border-width: 1px;
+  color: #151515;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 9px;
+  border-color: #f29559;
+  margin: 5px;
+  margin-top: 15px;
+  letter-spacing: 1px;
+
+  position: relative;
+  width: 190px;
+}
+
+.deleteItem-button a:hover {
+
+  color: #151515;
+
 }
 
 .login-button:hover {
@@ -282,6 +335,8 @@ body {
   border-color: #f29559;
   margin-left: 2px;
   margin-right: 2px;
+  letter-spacing: 1px;
+
 }
 
 .login-button a {
@@ -362,6 +417,22 @@ a:hover {
   outline: none !important;
 }
 
+.detailsforms {
+  background-color: #283845 !IMPORTANT;
+  width: 580px;
+  height: 750px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 16px;
+  border-width: 1px;
+  border: solid #b8b08d;
+  color: #d7d7d7;
+  outline: none !important;
+}
+
+
 .allforms:focus {
   background-color: #283845 !IMPORTANT;
   width: 280px;
@@ -390,10 +461,14 @@ a:hover {
   border-radius: 6px;
   overflow: hidden;
   font-size: 15px;
+  letter-spacing: 1px;
+
 }
 
 .button-anon-pen:hover {
   -webkit-animation: play 1.6s ease-in infinite;
+  letter-spacing: 1px;
+
 }
 
 .button-anon-pen div {
@@ -433,4 +508,47 @@ a:hover {
 
 .button-anon-pen a {
   font-size: 10pt;
+}
+
+.jokebutton {
+  background-color: #202c39; /* Green */
+  border: solid;
+  border-width: 1px;
+  color: #f29559;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 9px;
+  border-color: #f29559;
+  margin: 5px;
+  margin-top: 15px;
+  letter-spacing: 2px;
+
+  position: relative;
+  width: 190px;
+}
+
+.joke {
+  text-align: left;
+  align-content: left;
+}
+
+.jokebutton:hover {
+  background-color: #f29559; /* Green */
+  border: solid;
+  border-width: 1px;
+  color: #151515;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 9px;
+  border-color: #f29559;
+  margin: 5px;
+  margin-top: 15px;
+  letter-spacing: 2px;
+
+  position: relative;
+  width: 190px;
 }

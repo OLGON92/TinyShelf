@@ -62,7 +62,7 @@ _This is our eleventh project for Epicodus that is meant to showcase our underst
 * _Anytime you make a change to any of the models, you will have to enter this command "dotnet ef migrations add [ChangeInMigration]"_
 
 ## Known Bugs
-* _Currently still working on applying our model into the splash page by doing partial rendering. Also still working on linking our view/models. <strike>I also ran out ofCocaCola. (please sponsor me!!)</strike> (Offically off the juice but having a tough time - Remy)_
+* _Currently still working on applying our model into the splash page by doing partial rendering. Also still working on linking our view/models. <strike>I also ran out ofCocaCola. (please sponsor me!!)</strike> (<strike>Offically off the juice but having a tough time - Remy</strike> im on the cola again.. - Remy)_
 * _If I missed something, or a bug is found send me an email to_ [insert email here]
 
 ## License

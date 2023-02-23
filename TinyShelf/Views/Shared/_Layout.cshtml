@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TinyShelf.styles.css" asp-append-version="true" />
+  <script>
+    function showDiv() {
+      var div = document.getElementById("myDiv");
+      div.style.display = "block";
+    }
+  </script>
+
 </head>
 <body>
 
@@ -15,11 +22,12 @@
         <div class="box">
             <div class="column1">
                 <div class="column1-header">
-                    <a href="~/Index" class="img-link"><img src="~/img/logo.png" class="logo"></a>
+                    <a href="~/" class="img-link"><img src="~/img/logo.png" class="logo"></a>
                 </div>
 
                     <div class="fadein">
                         <a href="/Account/Index" class="img-link"><img src="~/img/user.png" class="img-link"></a>
+                        <button onclick="showDiv()" class="jokebutton" >tiny joke</button>
                     </div>
 
                 <hr />
@@ -88,6 +96,7 @@
 
             <div class="column2">
                 <div class="column2-nav">
+                    <div id="myDiv" class="joke" style="display:none;">What do you call a fake noodle? An impasta.</div>
                     <div>
                         @if (User.Identity.IsAuthenticated)
                         {
